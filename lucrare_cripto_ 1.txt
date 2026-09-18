@@ -1,0 +1,46 @@
+'''
+
+                            Online Python Compiler.
+                Code, Compile, Run and Debug python program online.
+Write your code in this editor and press "Run" button to execute it.
+
+'''
+
+ALFABET = "AĂÂBCDEFGHIÎJKLMNOPRSȘTȚUVWXYZ"
+
+optiune = input("Alege (1-Criptare, 2-Decriptare) ").strip()
+if optiune not in ["1", "2"]:
+    print("Opțiune invalidă! Introduceți 1 sau 2.")
+    exit()
+
+cheie_str = input("Introdu Cheia 1 (1-30) ").strip()
+if not cheie_str.isdigit() or not (1 <= int(cheie_str) <= 30):
+    print("Cheie invalidă! Introduceți un număr întreg între 1 și 30.")
+    exit()
+
+cheie = int(cheie_str)
+text_raw = input("Introdu textul ")
+
+text = text_raw.upper().replace(" ", "")
+
+for caracter in text:
+    if caracter not in ALFABET:
+        print("Text invalid! Folosiți doar litere din alfabetul român.")
+        exit()
+
+if len(text) == 0:
+    print("Textul nu poate fi gol!")
+    exit()
+
+rezultat = ""
+
+for litera in text:
+    pozitie = ALFABET.index(litera)
+    if optiune == "1":
+        noua_pozitie = (pozitie + cheie) % 31
+    else:
+        noua_pozitie = (pozitie - cheie) % 31
+    rezultat = rezultat + ALFABET[noua_pozitie]
+
+print("Text prelucrat:", text)
+print("Rezultat:", rezultat)

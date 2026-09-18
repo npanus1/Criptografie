@@ -1,0 +1,68 @@
+'''
+
+                            Online Python Compiler.
+                Code, Compile, Run and Debug python program online.
+Write your code in this editor and press "Run" button to execute it.
+
+'''
+
+ALFABET_STD = "AĂÂBCDEFGHIÎJKLMNOPRSȘTȚUVWXYZ"
+
+optiune = input("Alege (1-Criptare, 2-Decriptare) ").strip()
+if optiune not in ["1", "2"]:
+    print("Opțiune invalidă! Introduceți 1 sau 2.")
+    exit()
+
+cheie1_str = input("Introdu Cheia 1 (1-30) ").strip()
+if not cheie1_str.isdigit() or not (1 <= int(cheie1_str) <= 30):
+    print("Cheie 1 invalidă! Introduceți un număr întreg între 1 și 30.")
+    exit()
+
+cheie1 = int(cheie1_str)
+
+cheie2_raw = input("Introdu Cheia 2 (minim 7 litere românești)").strip()
+cheie2 = cheie2_raw.upper().replace(" ", "")
+
+if len(cheie2) < 7:
+    print("Cheie 2 invalidă! Trebui să aibă o lungime de cel puțin 7 caractere.")
+    exit()
+
+for caracter in cheie2:
+    if caracter not in ALFABET_STD:
+        print("Cheie 2 invalidă! Trebui să conțină doar litere din alfabetul român.")
+        exit()
+
+alfabet_permutat = ""
+for litera in cheie2:
+    if litera not in alfabet_permutat:
+        alfabet_permutat = alfabet_permutat + litera
+
+for litera in ALFABET_STD:
+    if litera not in alfabet_permutat:
+        alfabet_permutat = alfabet_permutat + litera
+
+text_raw = input("Introdu textul ")
+text = text_raw.upper().replace(" ", "")
+
+for caracter in text:
+    if caracter not in ALFABET_STD:
+        print("Text invalid! Folosiți doar litere din alfabetul român.")
+        exit()
+
+if len(text) == 0:
+    print("Textul nu poate fi gol!")
+    exit()
+
+rezultat = ""
+
+for litera in text:
+    pozitie = alfabet_permutat.index(litera)
+    if optiune == "1":
+        noua_pozitie = (pozitie + cheie1) % 31
+    else:
+        noua_pozitie = (pozitie - cheie1) % 31
+    rezultat = rezultat + alfabet_permutat[noua_pozitie]
+
+print("\nAlfabet permutat", alfabet_permutat)
+print("Text prelucrat", text)
+print("Rezultat:", rezultat)
